@@ -1,0 +1,176 @@
+/* ==========================================================
+   RÉGLAGES DE LA PAGE D'ACCUEIL
+   → Modifie seulement les valeurs ci-dessous.
+
+   Comment ça marche : la page est une "scène" au format du cadre Figma,
+   qui s'agrandit ou rétrécit avec l'écran. Toutes les positions et tailles
+   sont donc en proportion de la scène, et restent au même endroit
+   quelle que soit la taille de l'écran.
+
+   Unités :
+   %    = pourcentage de la scène (positions)
+   cqw  = pourcentage de la largeur de la scène (tailles de texte, photo…)
+   ========================================================== */
+
+/* ---------- ORDINATEUR (écran plus large que haut) ---------- */
+:root {
+  /* --- Format de la scène = taille du cadre dans Figma, en pixels --- */
+  --scene-largeur: 1920;
+  --scene-hauteur: 1080;
+
+  /* --- Spécialité (petit texte au-dessus de "PORTFOLIO") --- */
+  --specialite-taille: 4cqw;           /* Taille du texte */
+  --specialite-couleur: #ffffff;       /* Couleur du texte */
+  --specialite-police: var(--police-titres); /* Police (par défaut : celle des titres, réglée dans style.css) */
+
+  /* --- Titre "PORTFOLIO" --- */
+  --titre-taille: 16cqw;               /* Taille du texte */
+  --titre-couleur: #ffffff;            /* Couleur du texte */
+  --titre-police: var(--police-titres);/* Police (par défaut : celle des titres, réglée dans style.css) */
+  --titres-position-haut: 6%;          /* Distance entre le haut de la scène et la spécialité */
+
+  /* --- Photo --- */
+  --photo-largeur: 25cqw;              /* Largeur de la photo */
+  --photo-arrondi: 3cqw;               /* Arrondi des coins (0 = coins carrés) */
+  --photo-position-gauche: 10%;        /* Distance depuis le bord gauche de la scène */
+  --photo-position-haut: 40%;          /* Distance depuis le haut de la scène */
+
+  /* --- Prénom Nom (sous la photo) --- */
+  --nom-taille: 2cqw;                  /* Taille du texte */
+  --nom-couleur: #ffffff;              /* Couleur du texte */
+
+  /* --- Fond animé --- */
+  --couleur-fond-accueil: #dbe4ee;     /* Couleur visible pendant le chargement des images */
+  --parallax-marge: 5%;                /* Partie des calques cachée sur les côtés, pour qu'aucun
+                                          vide n'apparaisse quand ils bougent. À augmenter si
+                                          l'effet parallax est plus fort. */
+}
+
+/* ---------- TÉLÉPHONE (écran plus haut que large) ----------
+   Seules les valeurs différentes de l'ordinateur sont ici. */
+@media (orientation: portrait) {
+  :root {
+    --scene-largeur: 1080;
+    --scene-hauteur: 1920;
+
+    --specialite-taille: 6cqw;
+    --titre-taille: 17cqw;
+    --titres-position-haut: 8%;
+
+    --photo-largeur: 60cqw;
+    --photo-arrondi: 6cqw;
+    --photo-position-gauche: 20%;
+    --photo-position-haut: 30%;
+
+    --nom-taille: 5cqw;
+  }
+}
+
+
+/* ==========================================================
+   FONCTIONNEMENT (pas besoin de modifier en dessous)
+   ========================================================== */
+
+/* La page d'accueil occupe tout l'écran, sans barre de défilement */
+.accueil {
+  position: relative;
+  display: block;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  text-decoration: none;
+  background: var(--couleur-fond-accueil);
+}
+
+/* Les 3 blocs (décor arrière, contenu, décor avant) sont centrés et empilés */
+.decor, .contenu {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: var(--scene-largeur) / var(--scene-hauteur);
+  container-type: inline-size;   /* Permet l'unité cqw */
+}
+
+/* DÉCOR : remplit tout l'écran (les bords dépassent si l'écran n'a pas le même format) */
+.decor {
+  width: max(100%, 100vh * var(--scene-largeur) / var(--scene-hauteur));
+  width: max(100%, 100dvh * var(--scene-largeur) / var(--scene-hauteur));
+}
+
+/* CONTENU : tient entièrement dans l'écran (rien n'est jamais coupé) */
+.contenu {
+  width: min(100%, 100vh * var(--scene-largeur) / var(--scene-hauteur));
+  width: min(100%, 100dvh * var(--scene-largeur) / var(--scene-hauteur));
+}
+
+.decor > *, .contenu > * { position: absolute; margin: 0; }
+
+/* Éléments qui bougent avec la souris : prévient le navigateur pour une animation fluide */
+[data-profondeur] { will-change: translate; }
+
+/* Calques du décor : toute la scène, un peu plus larges sur les côtés */
+.calque {
+  top: 0;
+  bottom: 0;
+  left: calc(-1 * var(--parallax-marge));
+  right: calc(-1 * var(--parallax-marge));
+}
+.calque img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* Remplit le calque sans déformer l'image */
+}
+
+/* Éléments de déco (position réglée dans le HTML) */
+.deco {
+  left: var(--x);
+  top: var(--y);
+  width: var(--taille);
+}
+@media (orientation: portrait) {
+  .deco {
+    left: var(--x-tel, var(--x));
+    top: var(--y-tel, var(--y));
+    width: var(--taille-tel, var(--taille));
+  }
+}
+
+/* Spécialité + PORTFOLIO, centrés en haut */
+.titres {
+  top: var(--titres-position-haut);
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: 1;
+}
+.specialite {
+  margin: 0;
+  font-family: var(--specialite-police);
+  font-size: var(--specialite-taille);
+  color: var(--specialite-couleur);
+}
+.titre {
+  margin: 0;
+  font-family: var(--titre-police);
+  font-size: var(--titre-taille);
+  color: var(--titre-couleur);
+  white-space: nowrap;
+}
+
+/* Photo + nom */
+.carte {
+  left: var(--photo-position-gauche);
+  top: var(--photo-position-haut);
+  width: var(--photo-largeur);
+}
+.photo {
+  width: 100%;
+  border-radius: var(--photo-arrondi);
+}
+.nom {
+  margin: 0.5em 0 0;
+  font-size: var(--nom-taille);
+  color: var(--nom-couleur);
+  text-align: center;
+}

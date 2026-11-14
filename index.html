@@ -5,27 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portfolio — Emmie</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accueil.css">
+  <script src="assets/js/accueil.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="logo" href="index.html">Emmie</a>
-    <nav>
-      <a href="index.html">Accueil</a>
-      <a href="projets.html">Projets</a>
-      <a href="a-propos.html">À propos</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
 
-  <main>
-    <h1>Portfolio d'Emmie</h1>
-    <p>Page en construction.</p>
-  </main>
+  <!--
+    PAGE D'ACCUEIL
+    - Toute la page est un lien : un clic n'importe où mène à la page suivante.
+      → Pour changer la page de destination, modifie href="projets.html" juste en dessous.
+    - La page est faite de 3 blocs empilés : DÉCOR ARRIÈRE, puis CONTENU, puis DÉCOR AVANT.
+      Dans chaque bloc, le premier élément écrit est au fond, le dernier est devant.
+    - data-profondeur = force de l'effet parallax sur l'élément
+      0 = ne bouge pas · 0.2 = bouge un peu (loin) · 1 = bouge beaucoup (proche)
+    - Chaque image de décor existe en 2 versions :
+        srcset="..." → version TÉLÉPHONE (écran en hauteur)
+        src="..."    → version ORDINATEUR (écran en largeur)
+  -->
+  <a class="accueil" href="projets.html">
 
-  <footer class="site-footer">
-    <p>&copy; <span id="year"></span> Emmie</p>
-  </footer>
+    <!-- ######################## DÉCOR ARRIÈRE ######################## -->
+    <div class="decor">
 
-  <script src="assets/js/main.js"></script>
+      <!-- ===== CALQUE 1 : CIEL / NUAGES (tout au fond) ===== -->
+      <picture class="calque" data-profondeur="0.1">
+        <source media="(orientation: portrait)" srcset="assets/images/accueil/calque-1-ciel-telephone.svg">
+        <img src="assets/images/accueil/calque-1-ciel.svg" alt="" width="1920" height="1080" fetchpriority="high">
+      </picture>
+
+      <!-- ===== CALQUE 2 : VILLE / ARBRES ===== -->
+      <picture class="calque" data-profondeur="0.3">
+        <source media="(orientation: portrait)" srcset="assets/images/accueil/calque-2-ville-telephone.svg">
+        <img src="assets/images/accueil/calque-2-ville.svg" alt="" width="1920" height="1080">
+      </picture>
+
+      <!-- ===== CALQUE 3 : BOUTIQUE ===== -->
+      <picture class="calque" data-profondeur="0.5">
+        <source media="(orientation: portrait)" srcset="assets/images/accueil/calque-3-boutique-telephone.svg">
+        <img src="assets/images/accueil/calque-3-boutique.svg" alt="" width="1920" height="1080">
+      </picture>
+
+      <!-- ===== ÉLÉMENTS DE DÉCO =====
+           Dans style="..." :
+           --x = position depuis la gauche · --y = position depuis le haut · --taille = largeur
+           Positions différentes sur téléphone (facultatif) : --x-tel, --y-tel, --taille-tel
+           Pour ajouter une déco : copie une ligne <img class="deco" ...> et change l'image et la position. -->
+      <img class="deco" src="assets/images/accueil/deco-1.svg" alt="" width="300" height="300"
+           style="--x: 72%; --y: 22%; --taille: 8%;   --x-tel: 70%; --y-tel: 30%; --taille-tel: 18%;" data-profondeur="0.7">
+      <img class="deco" src="assets/images/accueil/deco-2.svg" alt="" width="300" height="300"
+           style="--x: 85%; --y: 55%; --taille: 6%;   --x-tel: 10%; --y-tel: 62%; --taille-tel: 14%;" data-profondeur="0.9">
+
+    </div>
+
+    <!-- ######################## CONTENU ######################## -->
+    <div class="contenu">
+
+      <!-- ===== TITRES : SPÉCIALITÉ + "PORTFOLIO" ===== -->
+      <div class="titres">
+        <p class="specialite">Design d'interaction &amp; graphisme</p>  <!-- TEXTE À MODIFIER -->
+        <h1 class="titre">PORTFOLIO</h1>                               <!-- TEXTE À MODIFIER -->
+      </div>
+
+      <!-- ===== PHOTO + NOM ===== -->
+      <div class="carte">
+        <img class="photo" src="assets/images/accueil/photo.svg" alt="Photo d'Emmie" width="600" height="600">
+        <p class="nom">Prénom Nom</p>                                  <!-- TEXTE À MODIFIER -->
+      </div>
+
+    </div>
+
+    <!-- ######################## DÉCOR AVANT ######################## -->
+    <div class="decor">
+
+      <!-- ===== CALQUE 4 : PREMIER PLAN (trottoir, plantes, banc) ===== -->
+      <picture class="calque" data-profondeur="1">
+        <source media="(orientation: portrait)" srcset="assets/images/accueil/calque-4-premier-plan-telephone.svg">
+        <img src="assets/images/accueil/calque-4-premier-plan.svg" alt="" width="1920" height="1080">
+      </picture>
+
+    </div>
+
+  </a>
+
 </body>
 </html>

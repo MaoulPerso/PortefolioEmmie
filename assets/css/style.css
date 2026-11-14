@@ -1,28 +1,65 @@
-/* Variables à ajuster d'après le Figma */
+/* ==========================================================
+   RÉGLAGES GÉNÉRAUX DU SITE (valables sur toutes les pages)
+   → Modifie seulement les valeurs ci-dessous.
+   ========================================================== */
 :root {
-  --color-bg: #ffffff;
-  --color-text: #1a1a1a;
-  --color-accent: #000000;
-  --font-body: system-ui, sans-serif;
-  --max-width: 1100px;
+  /* --- Couleurs --- */
+  --couleur-fond: #ffffff;          /* Fond des pages */
+  --couleur-texte: #1a1a1a;         /* Couleur du texte principal */
+
+  /* --- Polices --- */
+  --police-texte: system-ui, sans-serif;   /* Police du texte courant */
+  --police-titres: system-ui, sans-serif;  /* Police des grands titres */
+
+  /* --- Pointeur de la souris --- */
+  /* auto = curseur normal de l'ordinateur.
+     Pour une image : url("../images/curseur.png") 0 0, auto
+     (les deux chiffres = point exact qui "clique" dans l'image, en pixels ;
+      image de 32 x 32 px conseillée, 128 px maximum) */
+  --curseur: auto;            /* Curseur partout sur le site */
+  --curseur-lien: pointer;    /* Curseur au survol de ce qui est cliquable */
+
+  /* --- Mise en page --- */
+  --largeur-max: 1100px;      /* Largeur maximale du contenu des pages */
 }
+
+/* Pour ajouter une police (fichier .woff2 rangé dans assets/fonts/),
+   enlève la ligne "/* Pour ajouter..." et la ligne "*/" qui encadrent ce bloc, puis mets son nom
+   dans --police-titres ou --police-texte, ex : "MaPolice", sans-serif
+
+@font-face {
+  font-family: "MaPolice";
+  src: url("../fonts/ma-police.woff2") format("woff2");
+  font-display: swap;
+}
+*/
+
+
+/* ==========================================================
+   FONCTIONNEMENT (pas besoin de modifier en dessous)
+   ========================================================== */
 
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: var(--font-body);
-  color: var(--color-text);
-  background: var(--color-bg);
+  font-family: var(--police-texte);
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
   line-height: 1.5;
+  cursor: var(--curseur);
 }
 
+a, button { cursor: var(--curseur-lien); color: inherit; }
+
+img { display: block; max-width: 100%; height: auto; }
+
+/* En-tête, contenu et pied de page des pages intérieures */
 .site-header, main, .site-footer {
-  max-width: var(--max-width);
+  max-width: var(--largeur-max);
   margin: 0 auto;
   padding: 1.5rem 1rem;
 }
-
 .site-header {
   display: flex;
   justify-content: space-between;
@@ -30,8 +67,13 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
 }
-
 .site-header nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-
-a { color: inherit; }
 .logo { font-weight: 700; text-decoration: none; }
+
+/* Coupe les animations pour les personnes qui les ont désactivées sur leur ordinateur */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
