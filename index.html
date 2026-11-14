@@ -5,83 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portfolio — Emmie</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/transition.js"></script>  <!-- Transitions entre les pages (doit rester ici, dans le head) -->
   <link rel="stylesheet" href="assets/css/accueil.css">
+  <script src="assets/js/main.js" defer></script>
   <script src="assets/js/accueil.js" defer></script>
 </head>
 <body>
 
   <!--
     PAGE D'ACCUEIL
-    - Toute la page est un lien : un clic n'importe où mène à la page suivante.
+    - Un clic n'importe où mène à la page suivante (avec une transition).
       → Pour changer la page de destination, modifie href="projets.html" juste en dessous.
-    - La page est faite de 3 blocs empilés : DÉCOR ARRIÈRE, puis CONTENU, puis DÉCOR AVANT.
-      Dans chaque bloc, le premier élément écrit est au fond, le dernier est devant.
-    - data-profondeur = force de l'effet parallax sur l'élément
+      → Pour changer le sens de la transition, modifie data-direction="bas" (bas, haut, gauche, droite).
+    - 2 blocs empilés : le DÉCOR (fond + décos, qui bougent avec la souris)
+      puis le CONTENU (spécialité, PORTFOLIO, photo, nom).
+    - data-profondeur = force de l'effet parallax
       0 = ne bouge pas · 0.2 = bouge un peu (loin) · 1 = bouge beaucoup (proche)
-    - Chaque image de décor existe en 2 versions :
-        srcset="..." → version TÉLÉPHONE (écran en hauteur)
-        src="..."    → version ORDINATEUR (écran en largeur)
   -->
-  <a class="accueil" href="projets.html">
+  <a class="accueil" href="projets.html" data-direction="bas">
 
-    <!-- ######################## DÉCOR ARRIÈRE ######################## -->
+    <!-- ######################## DÉCOR ######################## -->
     <div class="decor">
 
-      <!-- ===== CALQUE 1 : CIEL / NUAGES (tout au fond) ===== -->
-      <picture class="calque" data-profondeur="0.1">
-        <source media="(orientation: portrait)" srcset="assets/images/accueil/calque-1-ciel-telephone.svg">
-        <img src="assets/images/accueil/calque-1-ciel.svg" alt="" width="1920" height="1080" fetchpriority="high">
+      <!-- ===== FOND =====
+           srcset="..." → image pour TÉLÉPHONE (écran en hauteur)
+           src="..."    → image pour ORDINATEUR (écran en largeur) -->
+      <picture class="fond" data-profondeur="0.2">
+        <source media="(orientation: portrait)" srcset="assets/images/accueil/fond-telephone.svg">
+        <img src="assets/images/accueil/fond.svg" alt="" width="1920" height="1080" fetchpriority="high">
       </picture>
 
-      <!-- ===== CALQUE 2 : VILLE / ARBRES ===== -->
-      <picture class="calque" data-profondeur="0.3">
-        <source media="(orientation: portrait)" srcset="assets/images/accueil/calque-2-ville-telephone.svg">
-        <img src="assets/images/accueil/calque-2-ville.svg" alt="" width="1920" height="1080">
-      </picture>
+      <!-- ===== DÉCOS =====
+           Dans style="..." : --x = position depuis la gauche · --y = depuis le haut · --taille = largeur
+           Sur téléphone (facultatif) : --x-tel, --y-tel, --taille-tel
+           Pour en ajouter une : copie la ligne d'exemple ci-dessous, colle-la après
+           la fin de ce commentaire (la ligne avec la flèche), puis change l'image et la position.
 
-      <!-- ===== CALQUE 3 : BOUTIQUE ===== -->
-      <picture class="calque" data-profondeur="0.5">
-        <source media="(orientation: portrait)" srcset="assets/images/accueil/calque-3-boutique-telephone.svg">
-        <img src="assets/images/accueil/calque-3-boutique.svg" alt="" width="1920" height="1080">
-      </picture>
-
-      <!-- ===== ÉLÉMENTS DE DÉCO =====
-           Dans style="..." :
-           --x = position depuis la gauche · --y = position depuis le haut · --taille = largeur
-           Positions différentes sur téléphone (facultatif) : --x-tel, --y-tel, --taille-tel
-           Pour ajouter une déco : copie une ligne <img class="deco" ...> et change l'image et la position. -->
-      <img class="deco" src="assets/images/accueil/deco-1.svg" alt="" width="300" height="300"
-           style="--x: 72%; --y: 22%; --taille: 8%;   --x-tel: 70%; --y-tel: 30%; --taille-tel: 18%;" data-profondeur="0.7">
-      <img class="deco" src="assets/images/accueil/deco-2.svg" alt="" width="300" height="300"
-           style="--x: 85%; --y: 55%; --taille: 6%;   --x-tel: 10%; --y-tel: 62%; --taille-tel: 14%;" data-profondeur="0.9">
+           Exemple :
+           <img class="deco" src="assets/images/accueil/ma-deco.png" alt="" width="300" height="300" style="--x: 75%; --y: 50%; --taille: 8%;" data-profondeur="0.6">
+      -->
 
     </div>
 
     <!-- ######################## CONTENU ######################## -->
     <div class="contenu">
 
-      <!-- ===== TITRES : SPÉCIALITÉ + "PORTFOLIO" ===== -->
+      <!-- ===== SPÉCIALITÉ + "PORTFOLIO" ===== -->
       <div class="titres">
-        <p class="specialite">Design d'interaction &amp; graphisme</p>  <!-- TEXTE À MODIFIER -->
-        <h1 class="titre">PORTFOLIO</h1>                               <!-- TEXTE À MODIFIER -->
+        <p class="specialite zone" data-profondeur="0.4">Design d'interaction &amp; graphisme</p>  <!-- TEXTE À MODIFIER -->
+        <h1 class="titre zone" data-profondeur="0.5">PORTFOLIO</h1>                               <!-- TEXTE À MODIFIER -->
       </div>
 
-      <!-- ===== PHOTO + NOM ===== -->
-      <div class="carte">
+      <!-- ===== PHOTO + PRÉNOM NOM ===== -->
+      <div class="carte" data-profondeur="0.8">
         <img class="photo" src="assets/images/accueil/photo.svg" alt="Photo d'Emmie" width="600" height="600">
-        <p class="nom">Prénom Nom</p>                                  <!-- TEXTE À MODIFIER -->
+        <p class="nom zone">Prénom Nom</p>                                  <!-- TEXTE À MODIFIER -->
       </div>
-
-    </div>
-
-    <!-- ######################## DÉCOR AVANT ######################## -->
-    <div class="decor">
-
-      <!-- ===== CALQUE 4 : PREMIER PLAN (trottoir, plantes, banc) ===== -->
-      <picture class="calque" data-profondeur="1">
-        <source media="(orientation: portrait)" srcset="assets/images/accueil/calque-4-premier-plan-telephone.svg">
-        <img src="assets/images/accueil/calque-4-premier-plan.svg" alt="" width="1920" height="1080">
-      </picture>
 
     </div>
 

@@ -12,10 +12,12 @@
   --police-titres: system-ui, sans-serif;  /* Police des grands titres */
 
   /* --- Pointeur de la souris --- */
-  /* auto = curseur normal de l'ordinateur.
-     Pour une image : url("../images/curseur.png") 0 0, auto
-     (les deux chiffres = point exact qui "clique" dans l'image, en pixels ;
-      image de 32 x 32 px conseillée, 128 px maximum) */
+  /* auto / pointer = curseurs normaux de l'ordinateur (par défaut).
+     Pour mettre un curseur personnalisé :
+       1. range l'image (.png ou .svg) dans assets/images/curseur/
+       2. remplace la valeur par : url("../images/curseur/mon-curseur.png") 0 0, auto
+     Les deux chiffres = point exact qui "clique" dans l'image, en pixels depuis le coin en haut à gauche.
+     Image de 32 x 32 px conseillée (128 x 128 px maximum, sinon le navigateur l'ignore). */
   --curseur: auto;            /* Curseur partout sur le site */
   --curseur-lien: pointer;    /* Curseur au survol de ce qui est cliquable */
 
@@ -69,6 +71,14 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .site-header nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
 .logo { font-weight: 700; text-decoration: none; }
+
+/* Transitions entre les pages (réglages dans assets/js/transition.js) */
+/* À l'arrivée, la page est cachée le temps que l'animation se prépare
+   (sécurité : elle réapparaît quoi qu'il arrive au bout de 1,5 s) */
+html.arrivee body { opacity: 0; animation: securite-affichage 0s 1.5s forwards; }
+@keyframes securite-affichage { to { opacity: 1; } }
+/* Pas de barre de défilement pendant que les éléments sortent de l'écran */
+html.transition-en-cours { overflow: hidden; }
 
 /* Coupe les animations pour les personnes qui les ont désactivées sur leur ordinateur */
 @media (prefers-reduced-motion: reduce) {

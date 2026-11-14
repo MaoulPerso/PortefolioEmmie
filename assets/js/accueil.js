@@ -25,9 +25,9 @@ let animationEnCours = false;
 // Pas d'effet sur téléphone/tablette (pas de souris)
 // ni si la personne a désactivé les animations sur son ordinateur
 const avecSouris = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-const animationsReduites = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const parallaxDesactive = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-if (avecSouris && !animationsReduites) {
+if (avecSouris && !parallaxDesactive) {
   window.addEventListener('mousemove', (evenement) => {
     cibleX = (evenement.clientX / window.innerWidth) * 2 - 1;   // -1 = bord gauche, 1 = bord droit
     cibleY = (evenement.clientY / window.innerHeight) * 2 - 1;  // -1 = haut, 1 = bas
